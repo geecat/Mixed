@@ -22,7 +22,9 @@ public class Reverse {
 		}
 
 		System.out.println("Printing reversed list");
-		temp = reverse(node);
+		//temp = reverse(node);
+		temp = reverseRecursive(node);
+		
 
 		while (temp != null) {
 			System.out.println(temp.data);
@@ -44,24 +46,40 @@ public class Reverse {
 
 	}
 
-	private static Link reverse(Link node) {
+	private static Link reverse(Link head) {
 
-		if (node == null) {
+		if (head == null) {
 			return null;
 		}
-		Link first = node;
-		Link rest = node.next;
-		if (rest == null) {
+		if(head.next==null) {
+			return head;
+		}
+
+		Link prev = null;
+		Link current = head;
+		while(head!=null) {
+			current = head;
+			head = head.next;
+			current.next = prev;
+			prev = current;
+		}
+		return current;
+	}
+	
+	private static Link reverseRecursive(Link head) {
+
+		if (head == null) {
 			return null;
 		}
-		// Node temp = node;
-		// node = node.getNext();
-		// node.setNext(reverse(temp));
-		reverse(rest);
-		rest.next = first;
-		//first.next = null;
-		node = rest;
-		return node;
+		if(head.next==null) {
+			return head;
+		}
+		
+		Link current = head.next;
+		head.next = null;
+		Link reverse = reverseRecursive(current);
+		current.next = head;
+		return reverse;
 	}
 
 }
